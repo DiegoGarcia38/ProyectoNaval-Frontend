@@ -1,8 +1,10 @@
-import React from 'react';
-import { ArrowRight, Download, Settings, Ship, Anchor, Gauge, Users, Zap, Mail, Phone, MapPin } from 'lucide-react';
+"use client";
+
+import React, { useState } from 'react';
+import { ArrowRight, Download, Settings, Ship, Anchor, Gauge, Users, Zap, Mail, Phone, MapPin, X } from 'lucide-react';
 import Link from 'next/link';
 
-// Mock components - replace with your actual components
+// Mock components
 const Header = () => (
   <header className="bg-white shadow-sm border-b border-gray-200">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,17 +60,17 @@ export default function HomePage() {
     { value: 32.70, label: "Length (m)", color: "green", icon: Ship },
     { value: 10, label: "Max Crew", color: "purple", icon: Users },
     { value: 13.5, label: "Speed (kn)", color: "orange", icon: Gauge },
-    { value: 12.82, label: "Beam (m)", color: "teal", icon: Zap }
+    { value: 12.8, label: "Beam (m)", color: "teal", icon: Zap }
   ];
 
   const vesselSpecs = [
-    { label: "Dimensions", items: ["Length o.a.: 32.7 m", "Beam o.a.: 12.82 m", "Draught aft max: 5.90 m"] },
+    { label: "Dimensions", items: ["Length o.a.: 32.7 m", "Beam o.a.: 12.8 m", "Draught aft max: 5.90 m"] },
     { label: "Performance", items: ["Bollard pull ahead: 82.4 t", "Bollard pull astern: 77.4 t", "Speed: 13.5 kn"] },
     { label: "Capacities", items: ["Fuel oil: 148.3 m³", "Fresh water: 15.4 m³", "Sewage: 5.1 m³"] }
   ];
 
   const comparisons = [
-    { name: "ASD Tug 3212", bollardPull: 82, length: 32.70, crew: 10, speed: 13.5, beam: 12.82, featured: true },
+    { name: "ASD Tug 3212", bollardPull: 82, length: 32.70, crew: 10, speed: 13.5, beam: 12.8, featured: true },
     { name: "ASD Tug 2813", bollardPull: 60, length: 28.57, crew: 8, speed: 13, beam: 11.43 },
     { name: "RSD Tug 2513", bollardPull: 83, length: 27.59, crew: 10, speed: 12.7, beam: 12.93 }
   ];
@@ -114,6 +116,27 @@ export default function HomePage() {
     }
   ];
 
+  // Nuevo estado para la galería de imágenes y vista 360
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [show360View, setShow360View] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
+  
+  const galleryImages = [
+    "https://medialibrary.damen.com/transform/f2d87c9c-0885-466e-8136-4b9a2c46d29c/512567-EN-AVANT-25-ASD-TUG-3212-DAMEN-2?io=transform:fill,width:1920&quality=75",
+    "https://medialibrary.damen.com/transform/25f498ed-42f7-4468-90a6-cdf04903d299/512567-EN-AVANT-25-ASD-TUG-3212-DAMEN-3?io=transform:fill,width:1920&quality=75",
+    {
+      type: "video",
+      thumbnail: "https://medialibrary.damen.com/transform/64b7ccc6-99e9-489b-9ba9-fca9a8a1695c/asd-tug-3212-video?io=transform:fill,width:3840,height:3840&quality=75",
+      url: "https://player.vimeo.com/video/455717216?autoplay=1&muted=1&loop=1&background=1" 
+    },
+    "https://medialibrary.damen.com/transform/aec8081b-8f2d-48d1-9cc8-a16e402405b5/asd-3212-1?io=transform:fill,width:1920&quality=75",
+    {
+      type: "360",
+      thumbnail: "https://images.unsplash.com/photo-1622737133809-d95047b9e673?w=200&h=150&fit=crop",
+      url: "https://360-topaz.vercel.app/" // URL real del tour 360
+    }
+  ];
+
   const getColorClasses = (color) => {
     const colors = {
       blue: "bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100",
@@ -124,6 +147,121 @@ export default function HomePage() {
     };
     return colors[color] || colors.blue;
   };
+
+  // Componente de Galería de Imágenes
+  const ImageGallery = () => (
+    <div className="w-full">
+      {/* Imagen principal */}
+      <div className="relative rounded-xl overflow-hidden mb-4 bg-black">
+        {show360View ? (
+          <div className="relative">
+            <button 
+              onClick={() => setShow360View(false)}
+              className="absolute top-4 right-4 bg-white p-2 rounded-full z-10 shadow-lg hover:bg-gray-100 transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <iframe 
+              src={galleryImages[4].url}
+              className="w-full h-96 md:h-[500px]"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              title="360 Tour"
+            />
+          </div>
+        ) : showVideo ? (
+          <div className="relative w-full aspect-video">
+            <button 
+              onClick={() => setShowVideo(false)}
+              className="absolute top-4 right-4 bg-white p-2 rounded-full z-10 shadow-lg hover:bg-gray-100 transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <iframe 
+              src={`https://player.vimeo.com/video/455717216?autoplay=1&muted=1`}
+              className="w-full h-full"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              sandbox="allow-same-origin allow-scripts allow-popups"
+              title="Vimeo Video"
+            />
+          </div>
+        ) : (
+          <img 
+            src={typeof galleryImages[selectedImage] === 'string' 
+                  ? galleryImages[selectedImage] 
+                  : galleryImages[selectedImage].thumbnail} 
+            alt="Vessel" 
+            className="w-full h-auto object-contain"
+          />
+        )}
+      </div>
+      
+      {/* Miniaturas */}
+      <div className="flex space-x-3 overflow-x-auto py-2">
+        {galleryImages.map((img, index) => {
+          if (typeof img === 'string') {
+            return (
+              <button 
+                key={index} 
+                onClick={() => {
+                  setSelectedImage(index);
+                  setShow360View(false);
+                  setShowVideo(false);
+                }}
+                className={`flex-shrink-0 ${selectedImage === index && !show360View && !showVideo ? 'ring-2 ring-blue-500 rounded-lg' : ''}`}
+              >
+                <img 
+                  src={img} 
+                  alt={`Thumbnail ${index}`}
+                  className="w-20 h-20 object-cover rounded-lg"
+                />
+              </button>
+            );
+          } else if (img.type === "video") {
+            return (
+              <button 
+                key={index}
+                onClick={() => {
+                  setSelectedImage(index);
+                  setShowVideo(true);
+                  setShow360View(false);
+                }}
+                className={`flex-shrink-0 w-20 h-20 bg-gray-200 rounded-lg overflow-hidden relative ${showVideo ? 'ring-2 ring-blue-500' : ''}`}
+              >
+                <img 
+                  src={img.thumbnail} 
+                  alt="Video thumbnail"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-white opacity-90" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd"></path>
+                  </svg>
+                </div>
+              </button>
+            );
+          } else {
+            return (
+              <button 
+                key={index}
+                onClick={() => {
+                  setSelectedImage(index);
+                  setShow360View(true);
+                  setShowVideo(false);
+                }}
+                className={`flex-shrink-0 w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center ${show360View ? 'ring-2 ring-blue-500' : ''}`}
+              >
+                <span className="text-lg font-semibold text-gray-700">360°</span>
+              </button>
+            );
+          }
+        })}
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -140,25 +278,26 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Key Figures */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-center mb-8">Key Figures</h3>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-              {keyFigures.map((figure, index) => {
-                const IconComponent = figure.icon;
-                return (
-                  <div key={index} className={`p-6 rounded-xl border-2 ${getColorClasses(figure.color)} transition-all duration-300 transform hover:-translate-y-1 cursor-pointer`}>
-                    <div className="flex items-center justify-center mb-3">
-                      <IconComponent className="w-6 h-6" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* Key Figures */}
+            <div>
+              <h3 className="text-2xl font-bold text-center mb-8">Key Figures</h3>
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                {keyFigures.map((figure, index) => {
+                  const IconComponent = figure.icon;
+                  return (
+                    <div key={index} className={`p-6 rounded-xl border-2 ${getColorClasses(figure.color)} transition-all duration-300 transform hover:-translate-y-1 cursor-pointer`}>
+                      <div className="flex items-center justify-center mb-3">
+                        <IconComponent className="w-6 h-6" />
+                      </div>
+                      <div className="text-center">
+                        <div className="text-3xl font-bold mb-1">{figure.value}</div>
+                        <div className="text-sm font-medium opacity-75">{figure.label}</div>
+                      </div>
                     </div>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold mb-1">{figure.value}</div>
-                      <div className="text-sm font-medium opacity-75">{figure.label}</div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
               <div className="text-center mt-8">
                 <Link 
                   href="https://vesselconfigurator.damen.com/configure/ASD%20Tug%203212"
@@ -168,6 +307,12 @@ export default function HomePage() {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </div>
+            </div>
+
+            {/* Galería de Imágenes */}
+            <div>
+              <ImageGallery />
+            </div>
           </div>
         </div>
       </section>
