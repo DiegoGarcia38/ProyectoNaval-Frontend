@@ -1,8 +1,8 @@
 // src/app/vessels/[tugId]/page.js
 import VesselCard from '../../../components/vessel/vessels/VesselCard';
 
-export default function VesselPage({ params }) {
-  const { tugId } = params;
+export default async function VesselPage({ params }) {
+  const { tugId } = await params; // Agregar await aquí
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -19,10 +19,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const { tugId } = params;
-
+  const { tugId } = await params;
+  
   return {
     title: `${tugId.toUpperCase()} - Proyecto Naval`,
-    description: `Información detallada sobre el vessel ${tugId}`,
+    description: `Detailed specifications for the ${tugId.toUpperCase()} vessel`,
   };
 }

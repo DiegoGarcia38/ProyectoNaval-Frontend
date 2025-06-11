@@ -1,4 +1,4 @@
-// src/components/vessel/VesselDetails.js
+// src/components/vessel/vessels/VesselDetails.js
 'use client';
 
 const VesselDetails = ({ vessel }) => {
