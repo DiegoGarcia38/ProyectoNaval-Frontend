@@ -1,103 +1,99 @@
-import Image from "next/image";
+/* import { ArrowRight, Download, Settings, Ship, Anchor, Gauge, Users, Zap } from 'lucide-react' */
+import Header from '../components/Header'
+import Hero from '../components/Hero'
+import Specifications from '../components/Specifications'
+import Comparison from '../components/Comparison'
+import Solutions from '../components/Solutions'
+import News from '../components/News'
+import Link from 'next/link';
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-white text-gray-900">
+      <Header />
+      <Hero />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Key Figures */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-12">Key Figures</h2>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
+            <Link
+              href="/vessels/asd-tug-3212"
+              className="block p-4 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              <div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">82</div>
+                <div className="text-sm text-gray-600">Bollard Pull (t)</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">32.70</div>
+                <div className="text-sm text-gray-600">Length (m)</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">10</div>
+                <div className="text-sm text-gray-600">Max Crew</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">13.5</div>
+                <div className="text-sm text-gray-600">Speed (kn)</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">12.82</div>
+                <div className="text-sm text-gray-600">Beam (m)</div>
+              </div>
+
+              Ver ASD Tug 3212
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      <Specifications />
+      <Comparison />
+      <Solutions />
+      <News />
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center mb-4">
+                <div className="h-8 w-8 bg-blue-400 rounded"></div>
+                <span className="ml-2 text-xl font-bold">DAMEN</span>
+              </div>
+              <p className="text-gray-400">Leading shipbuilding company specializing in tugs and workboats.</p>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Vessels</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-white">Tugs</a></li>
+                <li><a href="#" className="hover:text-white">Workboats</a></li>
+                <li><a href="#" className="hover:text-white">Naval</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Services</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-white">Finance</a></li>
+                <li><a href="#" className="hover:text-white">Support</a></li>
+                <li><a href="#" className="hover:text-white">Trading</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Contact</h4>
+              <p className="text-gray-400">Do you want to know more?</p>
+              <button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200">
+                Contact Us
+              </button>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2025 Damen Shipyards. All rights reserved.</p>
+          </div>
+        </div>
       </footer>
     </div>
-  );
+  )
 }
